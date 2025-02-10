@@ -13,3 +13,13 @@ Users:
 ID and name input login
 fetch entry by ID: https://github.com/orgs/community/discussions/108921
 show tree and checklist (form updates excel on click + submit/update)
+
+NEW Issues:
+API key exposed (change to website-specific, new API after clearing git history)
+spreadsheet is "anyone with link" and spreadsheet ID is in code
+cannot move questions around but can add new questions at end/new category
+categories should be letters only and not "title" or "items" (existing IDs)
+
+DEV Notes:
+data indexes noted as iName/iPass/iChecked for when above database rows are added and reordered
+Checked initialized with A to simplify logic since Sheets API rows dont add leading blank strings
