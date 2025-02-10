@@ -1,0 +1,37 @@
+html {
+    /*background-color: #dfe6e9;*/
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.category {
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: larger;
+    padding-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+li {
+    margin-bottom: 5px; /* Adjust this value to control the spacing */
+}
+.subtask li {
+    margin-bottom: 5px; /* Ensure the same spacing for subtasks */
+}
+.subtask {
+    margin-left: 20px;
+}
+.completed {
+    color: gray;
+    text-decoration: line-through;
+}
+
+h2 {
+    font-family: "Miniver", serif;
+    font-weight: 400;
+    font-style: normal;
+}
