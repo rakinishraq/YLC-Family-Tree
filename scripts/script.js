@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (!item) return;
             let qID = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[index] + String(i + 1);
 
-
             let elItem = document.createElement('li');
             let elInp = document.createElement('input');
             elInp.type = 'checkbox'; elInp.setAttribute('data-id', qID);
@@ -72,11 +71,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             let elText = document.createTextNode(` ${item}`);
             elItem.appendChild(elText);
 
+            if (data[iChecked].includes(qID)) {
+                elInp.checked = true
+                elItem.classList.add('completed');
+            };
+
             elInp.addEventListener('change', async function() {
                 const qID = this.getAttribute('data-id');
                 const state = this.checked ? 'checked' : 'unchecked';
-
-                console.log(`Task ID: ${qID}, State: ${state}`);
 
                 if (this.checked) {
                     this.parentElement.classList.add('completed');
@@ -84,36 +86,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                 } else {
                     this.parentElement.classList.remove('completed');
                     data[iChecked] = data[iChecked].filter(id => id !== qID);
+                    if (data[iChecked].length == 0) data[iChecked].push('A');
                 }
 
                 let newChecked = data[iChecked].join(',');
+                console.log(newChecked, username);
 
-                // Update the row in Google Sheets
-                try {
-                    const updateUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetsID}/values/Checked!A${dataRow + 1}:C${dataRow + 1}?valueInputOption=USER_ENTERED&key=${apiKey}`;
-                    const response = await fetch(updateUrl, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            range: `Checked!A${dataRow + 1}:C${dataRow + 1}`,
-                            majorDimension: 'ROWS',
-                            values: [
-                                [data[iName], data[iPass], newChecked]
-                            ]
-                        })
-                    });
-                    const result = await response.json();
-                    console.log('Update result:', result);
-                } catch (error) {
-                    alert(`Error updating Google Sheets: ${error.message}`);
-                    console.error('Error:', error);
-                }
-
-                console.log(newChecked);
+                $("update").style.display = 'block';
             });
-
+            
             // add elItem to frag's cat element with id == categories[index]
             frag.getElementById(categories[index]).appendChild(elItem);
         });
@@ -125,3 +106,22 @@ document.addEventListener('DOMContentLoaded', async function() {
     //$("tree").src = "images/TREE.png"
     document.documentElement.style.backgroundColor = "#dfe6e9";
 });
+
+
+window.addEventListener("load", function() {
+    const form = document.getElementById('form');
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+        alert("crashout");
+      const data = new FormData(form);
+      const action = e.target.action;
+      fetch(action, {
+        method: 'POST',
+        body: data,
+      })
+      .then(() => {
+        alert("Success!");
+      })
+    });
+  });
+  
